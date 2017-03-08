@@ -1,0 +1,253 @@
+= Red Hat Ethel API =
+[[PageOutline(2,, inline)]]
+== Ethel description ==
+
+Ethel is a new iteration of Stage Candlepin Account Tool that's supposed to replace current [http://account-manager-stage.app.eng.rdu2.redhat.com Account tool]. This new version aims to provide better UX and simpler and more efficient interface. It's designed to provide separate back-end and front-end, which are loosely connected. The main advantages of such approach are:
+1. Web interface can be asynchronous (better performance)
+2. Back-end can provide a REST API which can be accessed separately
+
+[[BR]]
+== API documentation ==
+
+Please don't forget this API is not publicly available and may eventually change. This document is tracking all changes done on the API. Please be noted that all request should be POST http requests and should be in JSON format.
+
+
+== New account ==
+
+=== POST ===
+{{{
+/account/new
+}}}
+
+=== Request parameters ===
+
+||= Field      =||= Type =||= Description                 =||
+|| `username`   || String || Account's username            ||
+|| `password`   || String || Account's password            ||
+|| `first_name` || String || Optional name of the owner    ||
+|| `last_name`  || String || Optional surname of the owner ||
+
+[[BR]]
+=== Success 200 ===
+
+||= Field  =||= Type =||= Description        =||= Value =||
+|| `status` || Int    || Response status code || 200     ||
+|| `msg`    || String || Message              || `"Account '<account's username>' created"` ||
+
+[[BR]]
+=== Error 4xx ===
+
+||= Field  =||= Type =||= Description        =||= Value =||
+|| `status` || Int    || Response status code || 400     ||
+|| `msg`    || String || Error description    || `"User already exist"` \\ `"Unable to create account"` \\ `"Unable to verify if account creation was successful"` \\ `"Bad request: <missing args description>"` \\ `"Application encountered an network issue, please try again later"` \\ `"Unknown Error"` ||
+
+[[BR]]
+
+== Activate account ==
+
+=== POST ===
+{{{
+/account/activate
+}}}
+
+=== Request parameters ===
+
+||= Field    =||= Type =||= Description      =||
+|| `username` || String || Account's username ||
+|| `password` || String || Account's password ||
+
+[[BR]]
+=== Success 200 ===
+
+||= Field  =||= Type =||= Description        =||= Value =||
+|| `status` || Int    || Response status code || 200     ||
+|| `msg`    || String || Message              || `"Terms and Conditions for account '<account's username>' were successfully accepted"` ||
+
+[[BR]]
+=== Error 4xx ===
+
+||= Field  =||= Type =||= Description        =||= Value =||
+|| `status` || Int    || Response status code || 400     ||
+|| `msg`    || String || Error description    || `"Invalid username or password"` \\ `"User is not present in Candlepin"` \\ `"Unable to verify credentials for account '<account's username>'"` \\ `"Unable to fetch OrgID from Candlepin"` \\ `"Unable to retrieve details about account's Ts&Cs to sign"` \\ `"Bad request: <missing args description>"` \\ `"Application encountered an network issue, please try again later"` \\ `"Unknown Error"` ||
+
+[[BR]]
+
+
+== View Account ==
+
+=== POST ===
+{{{
+/account/get
+}}}
+
+=== Request parameters ===
+
+||= Field    =||= Type =||= Description      =||
+|| `username` || String || Account's username ||
+|| `password` || String || Account's password ||
+
+[[BR]]
+=== Success 200 ===
+
+||||||= Field        =||= Type =||= Description             =||= Value =||
+|||||| `status`       || Int    || Response status code      || 200     ||
+|||||| `data`         || Object || Data about user           ||         ||
+||  |||| `username`   || String || Account's username        ||         ||
+||  |||| `org_id`     || Int    || Account's organization ID ||         ||
+||  |||| `pools`      || Array  || Account's SKU pools       ||         ||
+||  ||  || `sku`      || String || SKU identifier            ||         ||
+||  ||  || `quantity` || Int    || Pool's quantity           ||         ||
+||  ||  || `id`       || String || Subscription pool ID      ||         ||
+||  ||  || `name`     || String || Product name              ||         ||
+
+[[BR]]
+Example of data:
+{{{
+{
+    "status": "200",
+    "data": {
+        "username": "stage_tcoufal_test4",
+        "org_id": "7970661",
+        "pools": [
+            {
+                "sku": "MW2402294F3",
+                "quantity": "unlimited",
+                "id": "8a99f981553a7b4501556e73ef472f5e",
+                "name": "Red Hat JBoss BPM Suite without Management (Legacy), L3-Embedded (ISV Only), 1-Core Premium"
+            },
+            {
+                "sku": "MCT3397",
+                "quantity": 1,
+                "id": "8a99f981553a7b4501556e77cd962f73",
+                "name": "Red Hat Mobile Application Platform, B2E, Single-Use Application, Standard Support, 20,000-29,999 Users"
+            }
+        ]
+    }
+}
+}}}
+
+[[BR]]
+=== Error 4xx ===
+
+||= Field      =||= Type =||= Description        =||= Value =||
+|| `status` || Int    || Response status code || 400     ||
+|| `msg`    || String || Error description    || `"Invalid username or password"` \\ `"User is not present in Candlepin"` \\ `"Unable to verify credentials for account '<account's username>'"` \\ `"Bad request: <missing args description>"` \\ `"Application encountered an network issue, please try again later"` \\ `"Unknown Error"` ||
+
+[[BR]]
+
+
+== Attach subscription ==
+
+=== POST ===
+{{{
+/account/attach
+}}}
+
+=== Request parameters ===
+
+||= Field    =||= Type =||= Description                               =||
+|| `username` || String || Account's username                          ||
+|| `password` || String || Account's password                          ||
+|| `sku`      || Array  || List of SKU ID's to attach                  ||
+|| `quantity` || Int    || Quantity effective to all SKUs listed above ||
+
+[[BR]]
+=== Success 200 ===
+
+||= Field  =||= Type =||= Description        =||= Value =||
+|| `status` || Int    || Response status code || 200     ||
+|| `msg`    || String || Message              || `"These SKUs have been attached to '<account's username>' account: [<list of SKUs>]"` ||
+
+[[BR]]
+=== Error 4xx ===
+
+||= Field  =||= Type =||= Description        =||= Value =||
+|| `status` || Int    || Response status code || 400     ||
+|| `msg`    || String || Error description    || `"Invalid username or password"` \\ `"User is not present in Candlepin"` \\ `"Unable to verify credentials for account '<account's username>'"` \\ `"Unable to attach SKUs (not found in the DB): <list of SKUs>"` \\ `"Bad request: Invalid quantity value"` \\ `"Bad request: No SKUs listed"` \\ `"Bad request: <missing args description>"` \\ `"Application encountered an network issue, please try again later"` \\ `"Unknown Error"` ||
+
+[[BR]]
+
+== Refresh subscription pools ==
+
+=== POST ===
+{{{
+/account/refresh
+}}}
+
+=== Request parameters ===
+
+||= Field    =||= Type =||= Description      =||
+|| `username` || String || Account's username ||
+|| `password` || String || Account's password ||
+
+[[BR]]
+=== Success 200 ===
+
+||= Field  =||= Type =||= Description        =||= Value =||
+|| `status` || Int    || Response status code || 200     ||
+|| `msg`    || String || Message              || `"Pools for '<account's username>' refreshed successfully"` ||
+
+[[BR]]
+=== Error 4xx ===
+
+||= Field  =||= Type =||= Description        =||= Value =||
+|| `status` || Int    || Response status code || 400     ||
+|| `msg`    || String || Error description    || `"Invalid username or password"` \\ `"User is not present in Candlepin"` \\ `"Unable to verify credentials for account '<account's username>'"` \\ `"Bad request: <missing args description>"` \\ `"Application encountered an network issue, please try again later"` \\ `"Unknown Error"` ||
+
+[[BR]]
+
+== Searching the SKU database ==
+
+
+=== POST ===
+{{{
+/search
+}}}
+
+=== Request parameters ===
+
+||= Field        =||= Type =||= Description                                     =||
+|| `[]`           || Array  || List of search criteria (in query, joined by AND) ||
+|| `    key`      || String || Attribute ID to compare                           ||
+|| `    operator` || String || Comparison criteria                               ||
+|| `    value`    || String || Value to compare against                          ||
+
+[[BR]]
+Request example:
+{{{
+[
+    {
+        "key": "id",
+        "operator": "contains",
+        "value": "MCT"
+    },
+    {
+        "key": "cores",
+        "operator": "greater than",
+        "value": "4"
+    }
+]
+}}}
+
+Applicable criteria:
+
+||          ||= equals =||= does not equal =||= contains =||= does not contain =||= greater than =||= less then =||= empty or not applicable =||= applicable =||= unlimited =||
+||= String =||  x  ||     ||  x  ||  x  ||     ||     ||  x  ||     ||     ||
+||= Int    =||  x  ||  x  ||     ||     ||  x  ||  x  ||  x  ||  x  ||  x  ||
+||= Bool   =||  x  ||     ||     ||     ||     ||     ||     ||     ||     ||
+
+[[BR]]
+Data types for each SKU db attribute can be found on [wiki:SKU/HowTo/UseSKUDatabase this wiki page]
+
+=== Success 200 ===
+
+||= Field  =||= Type =||= Description                               =||= Value =||
+|| `status` || Int    || Response status code                        || 200     ||
+|| `data`   || Array  || List of SKUs that match the search criteria ||         ||
+
+[[BR]]
+=== Error 4xx ===
+
+||= Field  =||= Type =||= Description        =||= Value =||
+|| `status` || Int    || Response status code || 400     ||
+|| `msg`    || String || Error description    || `'<Search criteria>' is not a valid query` \\ `"Bad request: <missing args description>"` \\ `"Application encountered an network issue, please try again later"` \\ `"Unknown Error"` ||

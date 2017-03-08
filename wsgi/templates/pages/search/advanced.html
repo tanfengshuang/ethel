@@ -1,0 +1,94 @@
+{#- Macro for the advanced search form #}
+{% macro advanced(form) %}
+<form id="search_advanced_form" action="#" method="post" role="form">
+    <div class="form-group toolbar-pf-stackable">
+      <div class="input-group filter-template">
+
+        {#- Remove (-) button #}
+        <a class="remove_filter" href="#">
+          <span class="fa fa-minus"></span>
+        </a>
+
+        {#- Selection of attribute (search key) -#}
+        <div class="input-group-btn bs-dropdown-to-select-group attribute">
+          <button type="button" class="btn btn-default dropdown-toggle bs-dropdown-to-select" data-toggle="dropdown" tabindex="-1">
+            {#- pre-set default attribute (search key) #}
+            <span data-bind="sel-label">{{ form.attribute.choices[0]['name'] }}</span>
+            <input type="hidden" name="attribute" data-bind="sel-val" value="{{ form.attribute.choices[0]['id'] }}">
+            <input type="hidden" name="datatype" data-bind="sel-type" value="{{ form.attribute.choices[0]['type'] }}">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            {#- build a list of attributes #}
+            {%- for choice in form.attribute.choices %}
+            <li data-type="{{ choice['type'] }}" data-value="{{ choice['id'] }}" data-label="{{ choice['name'] }}"><a href="#">{{ choice['name'] }}</a></li>
+            {%- endfor %}
+          </ul>
+        </div>
+
+        {#- List of available comparisons for strings -#}
+        <div class="input-group-btn bs-dropdown-to-select-group apply_to_datatype_string">
+          <button type="button" class="btn btn-primary dropdown-toggle bs-dropdown-to-select" data-toggle="dropdown" tabindex="-1">
+            {#- select default operation over the preset attribute #}
+            {%- set first_op = form.compare.choices['string'].items()[0] %}
+            <span data-bind="sel-label">{{ first_op[0] }}</span>
+            <input type="hidden" name="compare_string" data-bind="sel-val" value="{{ first_op[0] }}">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            {%- for label in form.compare.choices['string'].keys() %}
+            <li
+{%- if not form.show_input(label) %} class="novalue"{% endif %} data-value="{{ label }}" data-label="{{ label }}"><a href="#">{{ label }}</a></li>
+            {%- endfor %}
+          </ul>
+        </div>
+
+        {#- String input field -#}
+        <input class="form-control apply_to_datatype_string" name="data_string" value="" type="text" required>
+
+        {#- Boolean comparison switch -#}
+        <div class="input-group apply_to_datatype_bool hidden">
+          <input name="data_bool" data-handle-width="30" data-label-width="10" data-on-text="True" data-off-text="False" checked="true" type="checkbox">
+        </div>
+
+        {#- Integer comparison - list of all available compare methods -#}
+        <div class="input-group-btn bs-dropdown-to-select-group apply_to_datatype_int hidden">
+          <button type="button" class="btn btn-primary dropdown-toggle bs-dropdown-to-select" data-toggle="dropdown" tabindex="-1">
+            {#- select default operation over the preset attribute #}
+            {%- set first_op = form.compare.choices['int'].items()[0] %}
+            <span data-bind="sel-label">{{ first_op[0] }}</span>
+            <input type="hidden" name="compare_int" data-bind="sel-val" value="{{ first_op[0] }}">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            {%- for label in form.compare.choices['int'].keys() %}
+            <li
+{%- if not form.show_input(label) %} class="novalue"{% endif %} data-value="{{ label }}" data-label="{{ label }}"><a href="#">{{ label }}</a></li>
+            {%- endfor %}
+          </ul>
+        </div>
+
+        {#- Integer input field -#}
+        <input class="form-control apply_to_datatype_int hidden" name="data_int" value="" type="number">
+      </div>
+
+      {#- Add additional filter button -#}
+      <div class="input-group pull-right">
+        <a class="add_filter" href="#">
+          <span class="fa fa-plus"></span>
+          Add another filter
+        </a>
+      </div>
+    </div>
+
+    {#- Submit button -#}
+    <div class="form-group">
+      <div class="input-group">
+        <button id="{{ form.submit.id }}" type="submit" value="{{ form.submit.label.text }}" class="btn btn-primary">
+          <span class="fa fa-search"></span>
+          Search
+        </button>
+      </div>
+    </div>
+</form>
+{% endmacro %}

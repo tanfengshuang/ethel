@@ -1,0 +1,60 @@
+{% macro help() %}
+<p>
+  This tool provides basic access to the Red Hat's stage customer accounts management. In other words it allows you to create customer
+  account, populate it with subscriptions and activate it. All in staged environment, using
+  <a href="http://subscription.rhn.stage.redhat.com">Stage Candlepin</a> and
+  <a href="http://access.stage.redhat.com">Stage Customer Portal</a>.
+</p>
+<h3>Create Accounts</h3>
+<p>
+  By feeding the tool with <strong>Username</strong> and <strong>Password</strong> you can easily create an account,
+  which you can later use when logging into <a href="http://access.stage.redhat.com">Stage Customer Portal</a> or when activating
+  a subscription on your machine.
+</p>
+<p>
+  As an option we're offering to you in the same step to populate the account with <strong>Subscription SKUs</strong>.
+  These are identified by SKU ID (you can lookup all available SKUs to subscribe via <a href="#search_basic">Search SKU Catalog</a> tab).
+  If it is necessary you can specify <strong>Quantity</strong> as well as <strong>Expiration Date</strong>. You can always come back and
+  add another Subscriptions for existing accounts in the <a href="#entitle">Add Subscription</a> tab.
+</p>
+  And finally, when you're populating your account with Subscriptions, in order to use them, you have to accept Red Hat's
+  <strong>Terms and Conditions</strong>. This can be done once you log in into <a href="http://access.stage.redhat.com">Stage Customer Portal</a>, or via our checkbox.
+</p>
+<h3>View Account</h3>
+<p>
+  Listing your account's Subscriptions is essential functionality for Ethel. Give Ethel you credentials and she's gonna tell you what
+  Subscriptions you have, what are their <strong>Subscription SKU ID</strong>, <strong>Pool ID</strong>, <strong>Quantity</strong> and specifically what <strong>Product Name</strong> does it refer to. For further details on a SKU you can always lookup the
+  <a href="#search_advanced">SKU Catalog</a>.
+</p>
+<h3>Activate Account</h3>
+<p>
+  Did you forgot to check the <strong>Accept Terms and Conditions</strong> checkbox? Here's a thing. You can go to
+  <a href="http://access.stage.redhat.com">Stage Customer Portal</a> or use this tab and Ethel does it for you.
+</p>
+<h3>Import and Export</h3>
+<p>
+  The <a href="http://subscription.rhn.stage.redhat.com">Stage Candlepin</a> is refreshed time to time. That means all accounts there are
+  deleted. If you have built a relationship with your accounts, you can head to this tab and make a backup. And once you want them back,
+  just upload your backup and it's done!
+</p>
+<h3>Add Subsctiption</h3>
+<p>
+  By adding a Subscription you're creating a new Subscription Pool. Such pool can have couple parameters set via this tool.
+  Of course, it is the SKU, you're attaching. In addition there's a <strong>Quantity</strong> and <strong>Expiration Date</strong>.
+  Subscriptions we're offering are 1 year long, so expiration date can be at most 1 year from now. Shorter time means we create a pool
+  that already started days before (so if you want a subscription to expire today, it actually started year ago).
+</p>
+<h3>Refresh Subscriptions</h3>
+<p>
+  Refreshing is a process of forced initialization of you Subscriptions. <strong>Is there something wrong with your account?
+  Head over here and hit Refresh!</strong>. It's the first aid when something is not working.
+</p>
+<h3>Search SKU Catalog</h3>
+<p>
+  We're offering two basic approaches how to search the database. First, the simpler method is to use a <strong>Product Name</strong>.
+  The other option is to specify the criteria yourself.
+</p>
+<p>
+  When you like the results of your search, you can download them! Just hit the Kebab menu on far right!
+</p>
+{% endmacro %}

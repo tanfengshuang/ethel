@@ -1,0 +1,79 @@
+{% extends "bootstrap/base.html" %}
+{% from "macros/help.html" import help %}
+
+{% block title %}Ethel - Page Not Found{% endblock %}
+
+{# include proper css files and stylings #}
+{% block styles %}
+<link href="{{ url_for('static', filename='css/rcue.min.css') }}" rel="stylesheet" media="screen, print">
+<link href="{{ url_for('static', filename='css/rcue-additions.min.css') }}" rel="stylesheet" media="screen, print">
+<link href="{{ url_for('static', filename='css/account_tool.css') }}" rel="stylesheet" media="screen, print">
+<link rel="icon" href="{{ url_for('static', filename='img/ethel-icon.png') }}" type="image/png">
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-default navbar-pf" role="navigation">
+      <div class="navbar-header">
+        {#- hide navigation for smaller devices #}
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        {#- specify brand image #}
+        <a class="navbar-brand" href="/">
+          <img src="{{ url_for('static', filename='img/RH-ETHEL-Header-Logo.svg') }}" alt="Red Hat ETHEL">
+        </a>
+      </div>
+      <div class="collapse navbar-collapse navbar-collapse-1">
+        {#- help in utility part contains link to Trac for bugs and help document toggle #}
+        <ul class="nav navbar-nav navbar-utility">
+          <li class="dropdown"><a aria-expanded="false" class="dropdown-toggle" href="/#" id="myTabDrop" data-toggle="dropdown">Help<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#" data-toggle="modal" data-target="#doc">How do I..?</a></li>
+              <li><a href="{{ report_url }}" target="_blank">Report a bug</a></li>
+            </ul>
+          </li>
+        </ul>
+        {#- primary navigation (sets which tab is visibile) #}
+        <ul class="nav navbar-nav navbar-primary">
+          <li class="arrow">
+            <span class="fa fa-angle-left"></span>
+            <a href="/">Back to front page</a>
+          </li>
+          </li>
+        </ul>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="page-header">
+    <h1>404 - Page not found</h1>
+  </div>
+  <div class="alert alert-warning">
+    <span class="pficon pficon-warning-triangle-o"></span>
+    <strong>Dragons ahead! .. or maybe not.</strong> Somehow you've managed to enter this unexplored land. Nothing can be found here. Eternal sea of empty space. Look around, name it after you or just sit down and take some rest. When you're done, please proceed back to the <a href="/">front page</a>.
+  </div>
+</div>
+
+{#- modal with help document showed on top -#}
+<div class="modal" id="doc" tabindex="-1" role="dialog" aria-labelledby="docLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" aria-label="Close">
+          <span class="pficon pficon-close"></span>
+        </button>
+        <h4 class="modal-title" id="docLabel">How to work with Ethel</h4>
+      </div>
+      <div class="modal-body">
+        {{ help() }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

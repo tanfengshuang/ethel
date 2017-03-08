@@ -1,0 +1,25 @@
+{% import "macros/form.html" as f %}
+{% import "macros/breadcrumb.html" as b %}
+
+{# Macro for the Refresh Subscriptions Tab #}
+{% macro refresh(form) %}
+{{ b.breadcrumb(['Subscription Pools', 'Refresh'])}}
+<div class="page-header">
+  <h1>Refresh Subscriptions</h1>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    {#- Display the form #}
+    <div class="col-sm-12 col-md-8">
+    {{ f.render_form(form, id="pool_refresh") }}
+    </div>
+    {#- Show the TIPs on the right #}
+    <div class="col-sm-12 col-md-4">
+      <div class="alert alert-info">
+        <span class="pficon pficon-info"></span>
+        <p>You can refresh the Subscriptions of your account here. This is necessary in case some discrepancy between candlepin pool data and customer's current subscription data occures. For further info, see this <a href="https://mojo.redhat.com/docs/DOC-953386">Mojo page</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}

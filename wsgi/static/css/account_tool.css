@@ -1,0 +1,268 @@
+/* CSS file Account tool specific, adjusts DataTables appearance */
+.table-clickable > tbody > tr.selected,
+.table-clickable > tbody > tr.selected:hover,
+.table-clickable > tbody > tr.selected:hover > td,
+.table-clickable > tbody > tr:hover > .selected {
+  background: #0099d3;
+  color     : #fff;
+}
+.dataTables_header {
+  text-align: left;
+  padding   : 0;
+  border    : none;
+}
+.dataTables_header .dataTables_filter {
+  position: relative;
+  display : inline-block;
+}
+.dataTables_filter label {
+  margin-bottom: 0;
+}
+.dataTables_wrapper {
+  margin-top: 0;
+}
+.dataTables_footer {
+  display         : flex;
+  background-color: #fafafa;
+}
+.dataTables_info {
+  text-align : center;
+  flex       : 1 1 auto;
+  padding-top: 3px;
+}
+.dataTables_length {
+  display    : flex;
+  flex-flow  : row;
+  align-items: stretch;
+}
+.dataTables_length a {
+  border     : 1px solid transparent;
+  padding    : 1px 10px;
+  flex-grow  : 1;
+  clear      : both;
+  text-align : center;
+  font-weight: 400;
+  color      : #363636;
+  line-height: 1.66666667;
+  white-space: nowrap;
+  cursor     : pointer;
+}
+.dataTables_length a:hover {
+  border-color    : #bee1f4;
+  background-color: #def3ff;
+  text-decoration : none;
+  color           : #4d5258;
+}
+.dataTables_length a.active {
+  background  : #0099d3;
+  border-color: #0076b7;
+  color       : #fff;
+}
+@media (min-width:768px) {
+  .border-right {
+    border-right: 1px solid #d1d1d1;
+  }
+}
+.alert:not(.toast-pf) strong.tip {
+  margin-right: 6px;
+}
+.toast-pf-top-right {
+  display       : flex;
+  align-items   : flex-end;
+  flex-direction: column;
+}
+.required label:before {
+  color  : red;
+  content: "* ";
+}
+.btn-file {
+  position        : relative;
+  overflow        : hidden;
+  vertical-align  : middle;
+  height          : 35px;
+  text-align      : center;
+  background-color: #f5f5f5;
+}
+.btn-file > input {
+  position : absolute;
+  top      : 0;
+  right    : 0;
+  width    : 100%;
+  height   : 100%;
+  margin   : 0;
+  cursor   : pointer;
+  opacity  : 0;
+  direction: ltr;
+}
+.drop-zone.blank-slate-pf {
+  padding: 5px;
+}
+.drop-zone > .dragover-outline {
+  padding: 85px 115px;
+  height : 100%;
+}
+.drop-zone.dragover > .dragover-outline {
+  border : 2px #ddd dashed;
+  padding: 83px 113px;
+}
+.drop-zone.dragover .btn-file {
+  opacity: 0;
+}
+.drop-zone .drop-text,
+.drop-zone.dragover .initial-text {
+  display: none;
+}
+.drop-zone.dragover .drop-text {
+  display: block;
+}
+.list-view-pf-actions .remove {
+  cursor: pointer;
+}
+.import-data .checkbox {
+  margin: 0;
+}
+.list-group-wrapper {
+  height       : 700px;
+  max-height   : 700px;
+  background   : #fafafa;
+  overflow-y   : scroll;
+  margin-bottom: 15px;
+}
+.list-group-wrapper .add-filter {
+  margin-left     : 20px;
+  background-color: white;
+  border          : 1px solid #f2f2f2;
+  border-top      : none;
+  padding         : 5px 15px;
+  display         : block;
+  cursor          : pointer;
+}
+.list-group-item-heading .form-group {
+  margin-bottom: 0;
+}
+.toolbar-pf {
+  padding-bottom: 10px;
+  padding-top   : 10px;
+  margin-bottom : 20px;
+}
+.toolbar-pf-actions .toolbar-pf-stackable {
+  padding-left: 0;
+}
+.toolbar-pf-actions .form-group:last-child {
+  border-right: none;
+}
+.toolbar-pf-actions .toolbar-pf-filter,
+.toolbar-pf-actions .toolbar-pf-stackable,
+.toolbar-pf-stackable .filter {
+  width: 100%;
+}
+.toolbar-pf-stackable .remove_filter {
+  display       : none;
+  vertical-align: middle;
+  padding-left  : 2px;
+  padding-right : 5px;
+  width         : 20px;
+  color         : #a30000;
+}
+@media (min-width: 768px) {
+  .toolbar-pf-actions .toolbar-pf-filter {
+    max-width: 500px;
+  }
+  .toolbar-pf-actions .toolbar-pf-stackable {
+    width: 500px;
+  }
+}
+.form-group.pull-right {
+  border-right : none;
+  padding-right: 0;
+}
+.show-tick.dropdown-menu li a {
+  padding-right: 30px;
+}
+.show-tick.dropdown-menu li.selected,
+.show-tick.dropdown-menu li.selected a {
+  background  : #0099d3;
+  border-color: #0076b7;
+  color       : #fff;
+}
+.dropdown-menu > li.disabled > a:active {
+  background  : transparent;
+  color       : #9c9c9c !important;
+  border-color: transparent;
+}
+.show-tick.dropdown-menu li:not(.selected):hover a {
+  color: #222;
+}
+.show-tick.dropdown-menu .fa {
+  color      : #fff;
+  position   : absolute;
+  display    : inline-block;
+  right      : 10px;
+  margin-top : 5px;
+  font-weight: 400;
+  line-height: 1;
+}
+.internal {
+  font-style: italic;
+}
+.ColVis .dropdown-menu br {
+  display: none;
+}
+.arrow .fa {
+  background-color: transparent;
+  padding         : 6px 10px;
+  position        : absolute;
+  font-size       : 30px;
+  color           : #dbdada;
+  z-index         : 2;
+  pointer-events  : none;
+}
+.arrow a {
+  padding-left: 40px !important;
+}
+.filter-template {
+  display      : none;
+  margin-bottom: 5px;
+}
+.filter {
+  margin-bottom: 5px;
+}
+.tooltip {
+  position   : fixed;
+  white-space: nowrap;
+}
+.tooltip .pficon {
+  margin-right: 10px;
+}
+.tooltip-inner {
+  max-width: unset;
+}
+.tooltip .list-unstyled {
+  margin-bottom: 0;
+}
+p .list-unstyled {
+  margin-bottom: 0;
+}
+p .list-unstyled {
+  margin-bottom: 0;
+}
+.sidebar-pf {
+  display  : flex;
+  flex-flow: column;
+}
+footer {
+  background-image   : url("/static/img/ethel.svg");
+  background-position: left bottom;
+  background-size    : 96px auto;
+  background-repeat  : no-repeat;
+  text-align         : right;
+  flex-grow          : 1;
+  font-size          : 11px;
+  margin-bottom      : 20px;
+  display            : flex;
+  align-items        : flex-end;
+}
+footer ul {
+  width        : 100%;
+  margin-bottom: 0;
+}

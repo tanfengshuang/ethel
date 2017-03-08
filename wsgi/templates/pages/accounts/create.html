@@ -1,0 +1,40 @@
+{% import "macros/form.html" as f %}
+{% import "macros/breadcrumb.html" as b %}
+
+{# Macro for the Create Account Tab #}
+{% macro create(form) %}
+{{ b.breadcrumb(['Accounts', 'New'])}}
+<div class="page-header">
+  <h1>Create Account</h1>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    {#- Display the form #}
+    <div class="col-sm-12 col-md-8">
+    {{ f.render_form(form, id='account_new')}}
+    </div>
+    {#- Show the TIPs on the right #}
+    <div class="col-sm-12 col-md-4">
+      <div class="alert alert-info">
+        <span class="pficon pficon-info"></span>
+        <p>By using this form you can easily create a brand new account for <a href="http://subscription.rhn.stage.redhat.com">Stage Candlepin</a>.</p>
+        <p>You can test your account via the <a href="http://access.stage.redhat.com">Stage Customer Portal</a>.</p>
+      </div>
+      <div class="alert alert-info">
+        <span class="pficon pficon-info"></span>
+        <p>Optionally, you can attach subscription SKUs to the account in one step. This process can also be done any other time, when your account is already created. To do so, please use the <a href=#entitle data-toggle="tab">Add Subscription</a> tab.</p>
+        <p>If you choose to add subscriptions while creating an account you can specify the pool's quantity as well. Please be noted, when you don't specify the quantity yourself, a default value is set. <strong>Default value is 1</strong>.</p>
+      </div>
+      <div class="alert alert-success">
+        <span class="pficon pficon-ok"></span>
+        <strong class='tip'>TIP:</strong>You can check your already created accounts via <a href=#view data-toggle="tab">View Account</a> tab.
+      </div>
+      <div class="alert alert-info">
+        <span class="pficon pficon-info"></span>
+          <p>By default, all created <strong>accounts are also activated</strong>. That means the Terms and Conditions that have to be accepted in order to use the account are automatically accepted. If you want to keep your account inactive, just untick the checkbox.</p>
+          <p>Accepting Terms and Conditions is only applicable for accounts that have been populated with Red Hat Subscription SKUs.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}

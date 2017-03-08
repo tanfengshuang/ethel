@@ -1,0 +1,117 @@
+{% from "pages/search/basic.html" import basic %}
+{% from "pages/search/advanced.html" import advanced %}
+
+{% macro search(basic_form, advanced_form) %}
+<div class="container-fluid">
+  {#- Top toolbar #}
+  <div class="row toolbar-pf">
+    <div class="col-sm-12">
+      <div class="toolbar-pf-actions">
+
+        {#- Display the basic and advanced search tabs content as a part of the same toolbar -#}
+        <div class="tab-content">
+          <div class="tab-pane" id="search_basic">
+            <div class="form-group toolbar-pf-filter">
+              {{ basic(basic_form) }}
+            </div>
+          </div>
+          <div class="tab-pane" id="search_advanced">
+          {{ advanced(advanced_form) }}
+          </div>
+        </div>
+
+        {#- And within the same toolbar show also the DataTable buttons -#}
+        <div class="form-group pull-right hidden">
+
+          {#- Labels toggle -#}
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Labels <span class="caret"></span></button>
+            <ul class="dropdown-menu show-tick">
+              <li id="verbose" class="selected">
+                <a href="#"><span class="text">Verbose names</span>
+                <span class="fa fa-check"></span></a>
+              <li id="internal">
+                <a href="#"><span class="text">Candlepin internals</span>
+                <span class="fa fa-check"></span></a>
+              </li>
+            </ul>
+          </div>
+
+          {#- <-- the other buttons are added dynamically here (when DataTable in properly initialized) -#}
+
+          {#- Download menu and results per page -#}
+          <div class="btn-group dropdown dropdown-kebab-pf options-menu">
+            <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <span class="fa fa-ellipsis-v"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li class="dropdown-header">Save results</li>
+              <li class="download-button download-all disabled"><a title="Download all the search results" href="">All results</a></li>
+              <li class="download-button download-selected disabled"><a title="Get data of the selected lines" href="">Selected lines only (<span class="counter">0</span>)</a></li>
+              <li role="separator" class="divider"></li>
+              <li class="dropdown-header">Results per page</li>
+              <li id='results-per-page'></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {#- row for table or placeholder or loading indication #}
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+
+      {#- Placeholder before any search is done -#}
+      <div id="search_placeholder" class="blank-slate-pf">
+        <div class="blank-slate-pf-icon">
+          <i class="pficon pficon-storage-domain"></i>
+        </div>
+        <h1>Search results</h1>
+        <p>You need to search the SKU database first. To do so, use the form above.</p>
+        <div class="blank-slate-pf-main-action">
+          <div class="alert alert-warning">
+            <span class="pficon pficon-warning-triangle-o"></span>
+            <strong class='tip'>NOTE:</strong>All SKUs listed here are available on Stage Candlepin. This tool is not suitable for Production Candlepin lookups.
+          </div>
+        </div>
+      </div>
+
+      {#- Loading indicator -#}
+      <div id="search_pending" class="blank-slate-pf hidden">
+        <div class="blank-slate-pf-icon">
+          <i class="pficon pficon-storage-domain"></i>
+        </div>
+        <h1>Searching for suitable results...</h1>
+        <div class="blank-slate-pf-main-action">
+          <div class="progress progress-striped active">
+            <div class="progress-bar" role="progressbar" style="width: 45%">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {#- DataTable template with prefilled header -#}
+      <div class="hidden" id="search_result">
+        <div class="table-responsive">
+          <table class="datatable table table-striped table-bordered table-hover table-clickable">
+              <thead>
+                <tr>
+                  {%- for key, val in layout.iteritems() %}
+                  <th>
+                    <span class="verbose">{{ val }}</span>
+                    <br>
+                    <span class="internal">{{ key }}</span>
+                  </th>
+                  {%- endfor %}
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endmacro %}

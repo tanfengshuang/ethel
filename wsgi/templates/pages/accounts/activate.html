@@ -1,0 +1,25 @@
+{% import "macros/form.html" as f %}
+{% import "macros/breadcrumb.html" as b %}
+
+{# Macro for the Account Activation Tab #}
+{% macro activate(form) %}
+{{ b.breadcrumb(['Accounts', 'Activate'])}}
+<div class="page-header">
+  <h1>Accept Terms and Conditions</h1>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    {#- Display the form #}
+    <div class="col-sm-12 col-md-8">
+    {{ f.render_form(form, id="account_terms")}}
+    </div>
+    {#- Show the TIPs on the right #}
+    <div class="col-sm-12 col-md-4">
+      <div class="alert alert-info">
+        <span class="pficon pficon-info"></span>
+        <p>Account activation in Ethel stands for accepting all Terms and Conditions which are required to successfully subscribe and use the account on your machine. If you check <strong>Accept Terms and Conditions</strong> when creating account or attaching subscriptions, the activation is done for you and there's no need for you to use this form.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}

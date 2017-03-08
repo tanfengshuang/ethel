@@ -1,0 +1,135 @@
+{% import "macros/breadcrumb.html" as b %}
+
+{# Macro for the Import/Export Tab #}
+{% macro import_export(import_form, export_form) %}
+{{ b.breadcrumb(['Accounts', 'Import or Export'])}}
+{#- Tabs headers #}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#import" data-toggle="tab">Import</a></li>
+  <li><a href="#export" data-toggle="tab">Export</a></li>
+</ul>
+<div class="tab-content">
+
+  {#- Import Tab content -#}
+  <div class="tab-pane active" id="import">
+    <div class="container-fluid">
+      <form id="import_form" action="" method="post" role="form">
+
+        {#- The drop zone - file selection -#}
+        <div class="row">
+          <div class="blank-slate-pf drop-zone">
+            <div class="dragover-outline">
+              <div class="blank-slate-pf-icon">
+                <i class="pficon pficon-folder-open"></i>
+              </div>
+              <h1 class="initial-text">Drag a file with backup here to import your accounts</h1>
+              <h1 class="drop-text">Drop to upload the file</h1>
+              <div class="btn-file">
+                {{ import_form.filename }}
+                or <a href="">choose a file</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {#- The list of accounts to import -#}
+        <div class="import-data hidden">
+          {#- Select different file button #}
+          <div class="row">
+            <div class="col-sm-12 btn-file">
+              {{ import_form.filename }}
+              <h4>Select different file</h4>
+            </div>
+          </div>
+          {#- The actual list #}
+          <div class="row list-group-wrapper">
+            <div class="import-list">
+              <div class="list-group list-view-pf list-view-pf-vielist-group list-view-pf list-view-pf-view">
+              </div>
+            </div>
+          </div>
+          {#- Submit and accept Terms and Conditions button #}
+          <div class="row form-submit">
+            <div class="col-sm-1">
+              {{ import_form.submit(class_="btn btn-default") }}
+            </div>
+            <div class="col-sm-11 checkbox">
+              {{ import_form.accept }} {{ import_form.accept.label }}
+            </div>
+          </div>
+        </form>
+
+        {#- Additional button (the same action as selecting a different file )-#}
+        <div class="row form-new-import">
+          <div class="col-sm-1">
+            <button class="btn btn-default hidden" type="reset">Import additional backup</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {#- The Export Tab content -#}
+  <div class="tab-pane" id="export">
+    <div class="container-fluid">
+      <form id="export-form" action="#" method="post" role="form">
+
+        {#- The list of accounts to export -#}
+        <div class="row list-group-wrapper">
+          <div class="list-group list-view-pf list-view-pf-vielist-group list-view-pf list-view-pf-view">
+
+            {#- Item template -#}
+            <div class="list-group-item export-template">
+              {#- The action on the far right - spinner or remove (X) button #}
+              <div class="list-view-pf-actions">
+                <span class="remove pficon pficon-close hidden"></span>
+                <div class="pficon progress-spinner hidden"><div class="spinner spinner-sm"></div></div>
+              </div>
+              {#- The main content, account icon and input fields #}
+              <div class="list-view-pf-main-info">
+                <div class="list-view-pf-left">
+                  <span class="pficon pficon-user"></span>
+                </div>
+                <div class="list-view-pf-body">
+                  <div class="list-view-pf-description">
+                    <div class="list-group-item-heading form-horizontal">
+                      <div class="form-group col-lg-4 required">
+                        {{ export_form.username.label(class_="control-label col-lg-3") }}
+                        <div class="col-lg-9">
+                          {{ export_form.username(class_="form-control")}}
+                        </div>
+                      </div>
+                      <div class="form-group col-lg-4 required">
+                        {{ export_form.password.label(class_="control-label col-lg-3") }}
+                        <div class="col-lg-9">
+                          {{ export_form.password(class_="form-control")}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {#- Add another account to the list button -#}
+            <div class="input-group">
+              <a class="add-filter">
+                <span class="fa fa-plus"></span>
+                Add another account
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {#- Submit button -#}
+        <div class="row form-submit">
+          <div class="col-sm-1">
+            {{ export_form.submit(class_="btn btn-default") }}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endmacro %}

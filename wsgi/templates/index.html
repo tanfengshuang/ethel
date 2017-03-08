@@ -1,0 +1,200 @@
+{# import html specification and page layout #}
+{% extends "bootstrap/base.html" %}
+
+{% from "pages/accounts/create.html" import create %}
+{% from "pages/accounts/import_export.html" import import_export %}
+{% from "pages/accounts/view.html" import view %}
+{% from "pages/accounts/activate.html" import activate %}
+{% from "pages/pools/entitle.html" import entitle %}
+{% from "pages/pools/refresh.html" import refresh %}
+{% from "pages/search/layout.html" import search with context %}
+{% from "macros/help.html" import help %}
+
+{# define page title #}
+{% block title %}Ethel{% endblock %}
+
+{# include proper css files and stylings #}
+{% block styles %}
+<link href="{{ url_for('static', filename='css/rcue.min.css') }}" rel="stylesheet" media="screen, print">
+<link href="{{ url_for('static', filename='css/rcue-additions.min.css') }}" rel="stylesheet" media="screen, print">
+<link href="{{ url_for('static', filename='css/account_tool.css') }}" rel="stylesheet" media="screen, print">
+<link rel="icon" href="{{ url_for('static', filename='img/ethel-icon.png') }}" type="image/png">
+<style id="dynamic_css" type="text/css"></style>
+{% endblock %}
+
+{# specify top navigation bar layout #}
+{% block navbar %}
+
+{% block messages %}
+<div id="messages" class="toast-pf-max-width toast-pf-top-right">
+  <noscript>
+    <div class="toast-pf pull-right alert alert-danger">
+      <div class="pficon pficon-error-circle-o"></div>
+      This site heavily relies on <strong>JavaScript</strong>. Please allow us to use it. Thank you!
+    </div>
+  </noscript>
+  {%- if refresh_date %}
+  <div class="toast-pf pull-right alert alert-warning alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+      <span class="pficon pficon-close"></span>
+    </button>
+    <span class="pficon pficon-warning-triangle-o"></span>
+    <p><strong>The Stage Candlepin refresh is coming soon!</strong> </p>
+    <p>By <strong>{{ refresh_date }}</strong> all accounts listed there are about to dissapear. If you want to keep your setup, <a href="#import_export">please backup them</a>.</p>
+  </div>
+  {%- endif %}
+</div>
+{% endblock %}
+
+<nav class="navbar navbar-default navbar-pf" role="navigation">
+      <div class="navbar-header">
+        {#- hide navigation for smaller devices #}
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        {#- specify brand image #}
+        <a class="navbar-brand" href="/">
+          <img src="{{ url_for('static', filename='img/RH-ETHEL-Header-Logo.svg') }}" alt="Red Hat ETHEL">
+        </a>
+      </div>
+      <div class="collapse navbar-collapse navbar-collapse-1">
+        {#- help in utility part contains link to Trac for bugs and help document toggle #}
+        <ul class="nav navbar-nav navbar-utility">
+          <li class="dropdown"><a aria-expanded="false" class="dropdown-toggle" href="/#" id="myTabDrop" data-toggle="dropdown">Help<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#" data-toggle="modal" data-target="#doc">How do I..?</a></li>
+              <li><a id='report' href="{{ report_url }}" target="_blank">Report a bug</a></li>
+              <li><a href="{{ documentation_url }}/API" target="_blank">API</a></li>
+              <li><a href="{{ documentation_url }}" target="_blank">Documentation</a></li>
+            </ul>
+          </li>
+        </ul>
+        {#- primary navigation (sets which tab is visibile) #}
+        <ul id="tabs" class="nav navbar-nav navbar-primary" role="tablist">
+          <li>
+            <a href="#manage" data-toggle="tab">Manage Accounts</a>
+          </li>
+          <li>
+            <a href="#search" data-toggle="tab">Search SKU Catalog</a>
+            <ul class="nav navbar-nav navbar-persistent">
+              <li><a href="#search_basic" data-toggle="tab">Search</a></li>
+              <li><a href="#search_advanced" data-toggle="tab">Advanced search</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+<div class="tab-content">
+  {#- Accounts manager #}
+  <div class="tab-pane" id="manage">
+    <div class="container-fluid">
+      <div class="row">
+        {#- page body - the content, text and forms #}
+        <div class="col-sm-9 col-md-10 col-sm-push-3 col-md-push-2">
+          <div class="tab-content">
+            <div class="tab-pane" id="create">
+              {{ create(create_form) }}
+            </div>
+            <div class="tab-pane" id="view">
+              {{ view(view_form) }}
+            </div>
+            <div class="tab-pane" id="import_export">
+              {{ import_export(csv_form, export_form) }}
+            </div>
+            <div class="tab-pane" id="activate">
+              {{ activate(terms_form) }}
+            </div>
+            <div class="tab-pane" id="entitle">
+              {{ entitle(entitle_form) }}
+            </div>
+            <div class="tab-pane" id="refresh">
+              {{ refresh(refresh_form) }}
+            </div>
+          </div>
+        </div>
+        {#- sidebar (sets which tab is visibile) #}
+        <div class="col-sm-3 col-md-2 col-sm-pull-9 col-md-pull-10 sidebar-pf sidebar-pf-left" role="navigation">
+          <div class="nav-category">
+            <h2>Accounts</h2>
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="#create" data-toggle="tab"><span class="fa fa-plus"></span> Create Account</a></li>
+              <li><a href="#view" data-toggle="tab"><span class="pficon pficon-user fa fa-fw"></span> View Account</a></li>
+              <li><a href="#activate" data-toggle="tab"><span class="fa fa-check"></span> Activate Account</a></li>
+              <li><a href="#import_export" data-toggle="tab"><span class="pficon pficon-import fa fa-fw"></span> Import or Export</a></li>
+            </ul>
+          </div>
+          <div class="nav-category">
+            <h2>Subscription Pools</h2>
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="#entitle" data-toggle="tab"><span class="fa fa-thumb-tack"></span> Add Subscriptions</a></li>
+              <li><a href="#refresh" data-toggle="tab"><span class="fa fa-refresh"></span> Refresh  Subscriptions</a></li>
+            </ul>
+          </div>
+          <footer>
+            <ul class="list-unstyled">
+              <li>Copyright © Red Hat, Inc.</li>
+              <li>All rights reserved</li>
+              <li>INTERNAL USE ONLY</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+  {#- search tab containing search forms and result display #}
+  <div class="tab-pane" id="search">
+    {{ search(search_product_form, search_attribute_form) }}
+  </div>
+</div>
+
+{#- modal with help document showed on top -#}
+<div class="modal" id="doc" tabindex="-1" role="dialog" aria-labelledby="docLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" aria-label="Close">
+          <span class="pficon pficon-close"></span>
+        </button>
+        <h4 class="modal-title" id="docLabel">How to work with Ethel</h4>
+      </div>
+      <div class="modal-body">
+        {{ help() }}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{%- endblock %}{# end of page content #}
+
+{#- add additional JavaScript #}
+{% block scripts %}
+<script type=text/javascript src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/dataTables.lengthLinks.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/account_tool.dt.colVis.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/patternfly.min.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/helper.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/ui.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/toast.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/account.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/search.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/import.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/export.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/bootstrap-switch.min.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/bootstrap-datepicker.min.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/papaparse.min.js') }}"></script>
+<script>
+var REPORT_URL = '{{ report_url }}'
+var REPORT_URL_CANDLEPIN = '{{ report_url_candlepin }}'
+// get columns layout
+var layout = {{ layout.keys()|safe }}
+</script>
+{% endblock %}

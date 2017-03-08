@@ -1,0 +1,25 @@
+{# Macro for rendering breadcrumb on a view #}
+{% import "bootstrap/wtf.html" as wtf %}
+{% macro render_form(form, id) -%}
+<form id="{{ id }}" class="form form-horizontal" method="post" role="form">
+  {#- Iterate over each field in form #}
+  {%- for field in form %}
+
+    {#- It it's not hidden button or submit button, render it -#}
+    {%- if not (bootstrap_is_hidden_field(field) or field.type == 'SubmitField') %}
+      {{ wtf.form_field(field, form_type="horizontal", horizontal_columns=('lg', 3, 9)) }}
+
+    {#- Render the submit button separately -#}
+    {%- elif field.type == 'SubmitField' %}
+      <div class="form-group">
+        <div class="col-lg-offset-3 col-lg-9">
+          {{ wtf.form_field(field) }}
+          {#- add reset button #}
+          <button type='reset' class='btn btn-link pull-right'><span class="pficon pficon-delete"></span> Reset form</button>
+        </div>
+      </div>
+    {%- endif %}
+
+  {%- endfor -%}
+</form>
+{%- endmacro %}

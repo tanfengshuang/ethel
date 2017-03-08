@@ -1,0 +1,17 @@
+# Flask server
+flask>=0.11.1
+flask-bootstrap
+flask-wtf
+
+# Database
+peewee
+PyMySQL
+
+# Networking
+requests
+M2Crypto>=0.25.1
+git+git://github.com/candlepin/python-rhsm.git
+
+# RHSM 2nd level dependencies (not installed by default since pulling from git)
+iniparse
+python-dateutil

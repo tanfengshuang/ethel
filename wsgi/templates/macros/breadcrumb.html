@@ -1,0 +1,8 @@
+{# Macro for rendering breadcrumb on a view #}
+{% macro breadcrumb(nav) -%}
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><strong>{{ nav[0] }}</strong></li>
+  <li class="active">{{ nav[1] }}</li>
+</ol>
+{%- endmacro %}

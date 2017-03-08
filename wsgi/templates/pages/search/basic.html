@@ -1,0 +1,32 @@
+{#- Macro for the basic search form #}
+{% macro basic(form) %}
+<form id="search_basic_form" name="basic_search" action="/search" method="post" role="form">
+  <div class="input-group">
+
+    {#- Dropdown which lets user to choose between 'Search by Product Name' or 'Search by SKU ID' -#}
+    <div class="input-group-btn bs-dropdown-to-select-group">
+      <button type="button" class="btn btn-default dropdown-toggle bs-dropdown-to-select" data-toggle="dropdown" tabindex="-1">
+              <span data-bind="sel-label">{{ form.category.choices[0][1] }}</span>
+              <input type="hidden" name="category" data-bind="sel-val" value="{{ form.category.choices[0][0] }}">
+              <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        {% for choice in form.category.choices %}
+        <li data-value="{{ choice[0] }}" data-label="{{ choice[1] }}"><a href="#">{{ choice[1] }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    {#- The actual input fields -#}
+    {{form.ph_product_name(class_='form-control')}}
+    {{form.id(class_='form-control hidden')}}
+
+    {#- Submit button -#}
+    <div class="input-group-btn">
+      <button id="{{ form.submit.id }}" type="submit" value="{{ form.submit.label.text }}" class="btn btn-primary">
+        <span class="fa fa-search"></span>
+      </button>
+    </div>
+  </div>
+</form>
+{% endmacro %}

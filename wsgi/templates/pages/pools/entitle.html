@@ -1,0 +1,30 @@
+{% import "macros/form.html" as f %}
+{% import "macros/breadcrumb.html" as b %}
+
+{# Macro for the Add Subscriptions Tab #}
+{% macro entitle(form) %}
+{{ b.breadcrumb(['Subscription Pools', 'Entitle'])}}
+<div class="page-header">
+  <h1>Add Subscriptions</h1>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    {#- Display the form #}
+    <div class="col-sm-12 col-md-8">
+    {{ f.render_form(form, id='pool_create') }}
+    </div>
+    {#- Show the TIPs on the right #}
+    <div class="col-sm-12 col-md-4">
+      <div class="alert alert-info">
+        <span class="pficon pficon-info"></span>
+        <p>You can populate your account on this tab by adding pools of subscriptions. These pools will appear in the list of all available subscriptions to systems that have registered to this account.</p>
+        <p>You can test your account via the <a href="http://access.stage.redhat.com">Stage Customer Portal</a>.</p>
+      </div>
+      <div class="alert alert-success">
+        <span class="pficon pficon-ok"></span>
+        <strong class='tip'>TIP:</strong>You can check your account before adding SKUs via <a href=#view data-toggle="tab">View Account</a> tab.
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}
