@@ -5,6 +5,7 @@ import logging
 import logging.config
 
 sys.path.insert(0, os.path.dirname(__file__) or '.')
+"""
 # add the repository root to the path (add candlepin package to the scope)
 sys.path.insert(0, os.environ.get('OPENSHIFT_REPO_DIR', '..'))
 
@@ -24,6 +25,7 @@ try:
     exec(open(virtualenv).read(), dict(__file__=virtualenv))
 except IOError:
     pass
+"""
 
 # set up logging
 logging_conf_file = "{0}/logging.conf".format(
