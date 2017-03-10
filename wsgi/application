@@ -25,7 +25,6 @@ try:
     exec(open(virtualenv).read(), dict(__file__=virtualenv))
 except IOError:
     pass
-"""
 
 # set up logging
 logging_conf_file = "{0}/logging.conf".format(
@@ -34,5 +33,5 @@ backup = os.getcwd()
 os.chdir(os.path.join(os.environ['OPENSHIFT_HOMEDIR'], "app-root"))
 logging.config.fileConfig(logging_conf_file)
 os.chdir(backup)
-
+"""
 from ethel import app as application
