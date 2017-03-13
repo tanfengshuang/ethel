@@ -8,7 +8,6 @@
 *.idea
 *.properties
 *.props
-logs/
 env/
 .DS_Store
 *.db
