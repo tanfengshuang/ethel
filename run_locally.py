@@ -20,4 +20,4 @@ logging.root = logging.getLogger('DEBUG')
 from ethel import app
 logging.debug("Debug environment enabled!")
 logging.info("[Starting] Account Tool Flask server...")
-app.run(debug=True, threaded=True, port=8080)
+app.run(debug=True, threaded=True, port=8080, host="0.0.0.0")
