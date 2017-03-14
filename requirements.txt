@@ -3,6 +3,9 @@ flask>=0.11.1
 flask-bootstrap
 flask-wtf
 
+# WSGI
+gunicorn
+
 # Database
 peewee
 PyMySQL
